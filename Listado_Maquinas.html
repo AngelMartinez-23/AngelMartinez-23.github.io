@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Máquinas - TryHackMe</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .machine-card {
+            animation: fadeIn 0.5s ease-in-out;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .machine-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 text-gray-900 p-6">
+    <div class="max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-center mb-4 text-blue-600">Máquinas de TryHackMe</h1>
+        <div class="flex items-center bg-white p-3 rounded-md shadow-md mb-4">
+            <i class="ph ph-magnifying-glass text-gray-500 text-xl mr-2"></i>
+            <input type="text" id="search" placeholder="Buscar máquina..." 
+                class="w-full p-2 text-gray-900 rounded-md outline-none" onkeyup="filterMachines()">
+        </div>
+        
+        <div id="machine-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- Las máquinas se generarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        const machines = [
+            { name: "Blue", writeup: "https://example.com/blue-writeup", link: "https://tryhackme.com/room/blue" },
+            { name: "Red", writeup: "https://example.com/red-writeup", link: "https://tryhackme.com/room/red" },
+            { name: "RootMe", writeup: "https://example.com/rootme-writeup", link: "https://tryhackme.com/room/rootme" },
+            { name: "Bounty Hunter", writeup: "https://example.com/bountyhunter-writeup", link: "https://tryhackme.com/room/bountyhunter" },
+            { name: "Overpass", writeup: "https://example.com/overpass-writeup", link: "https://tryhackme.com/room/overpass" }
+        ];
+
+        function renderMachines() {
+            const list = document.getElementById("machine-list");
+            list.innerHTML = "";
+            machines.forEach(machine => {
+                const card = document.createElement("div");
+                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
+                card.innerHTML = `
+                    <i class='ph ph-desktop text-blue-600 text-3xl mb-2'></i>
+                    <span class="font-bold mb-2 text-lg">${machine.name}</span>
+                    <div class="flex space-x-2">
+                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition">
+                            <i class="ph ph-book-open mr-1"></i> Write-Up
+                        </a>
+                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                            <i class="ph ph-arrow-square-out mr-1"></i> TryHackMe
+                        </a>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function filterMachines() {
+            const query = document.getElementById("search").value.toLowerCase();
+            const filteredMachines = machines.filter(machine => machine.name.toLowerCase().includes(query));
+            document.getElementById("machine-list").innerHTML = "";
+            filteredMachines.forEach(machine => {
+                const card = document.createElement("div");
+                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
+                card.innerHTML = `
+                    <i class='ph ph-desktop text-blue-600 text-3xl mb-2'></i>
+                    <span class="font-bold mb-2 text-lg">${machine.name}</span>
+                    <div class="flex space-x-2">
+                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition">
+                            <i class="ph ph-book-open mr-1"></i> Write-Up
+                        </a>
+                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                            <i class="ph ph-arrow-square-out mr-1"></i> TryHackMe
+                        </a>
+                    </div>
+                `;
+                document.getElementById("machine-list").appendChild(card);
+            });
+        }
+
+        renderMachines();
+    </script>
+</body>
+</html>
