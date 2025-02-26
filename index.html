@@ -37,15 +37,18 @@
 
     <script>
         const machines = [
-            "Blue", "Ice", "Blaster", "Library", "Retro", "Techsupp0rt1", "Relevant", "Anthem", "Basic Pentesting", 
-            "Kenobi", "Easypeasyctf", "Sudo Agent", "RootMe", "Brooklyn Nine Nine", "Bounty Hacker", "Poster", "StartUp", 
-            "Gamming Server", "Library", "Lazy Admin", "Startup", "Wgel CTF", "Year of the Rabbit", "lianyu", "Bolt", 
-            "DailyBugle", "pickle rick"
-        ].map(name => ({
-            name,
-            writeup: `https://example.com/${name.toLowerCase().replace(/\s+/g, '-')}-writeup`,
-            link: `https://tryhackme.com/room/${name.toLowerCase().replace(/\s+/g, '')}`
-        }));
+            { name: "Blue", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/blue/Write-Up%20M%C3%A1quina%20Blue.md", link: "https://tryhackme.com/room/blue" },
+            { name: "Ice", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/ice/Write-Up%20M%C3%A1quina%20Ice.md", link: "https://tryhackme.com/room/ice" },
+            { name: "Blaster", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/blaster/Write-Up%20M%C3%A1quina%20Blaster.md", link: "https://tryhackme.com/room/blaster" },
+            { name: "Library", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/library/Write-Up%20M%C3%A1quina%20Library.md", link: "https://tryhackme.com/room/library" },
+            { name: "Retro", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/retro/Write-Up%20M%C3%A1quina%20Retro.md", link: "https://tryhackme.com/room/retro" },
+            { name: "Techsupp0rt1", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/techsupp0rt1/Write-Up%20M%C3%A1quina%20Techsupp0rt1.md", link: "https://tryhackme.com/room/techsupp0rt1" },
+            { name: "Relevant", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/relevant/Write-Up%20M%C3%A1quina%20Relevant.md", link: "https://tryhackme.com/room/relevant" },
+            { name: "Anthem", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/anthem/Write-Up%20M%C3%A1quina%20Anthem.md", link: "https://tryhackme.com/room/anthem" },
+            { name: "Basic Pentesting", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/basic-pentesting/Write-Up%20M%C3%A1quina%20Basic%20Pentesting.md", link: "https://tryhackme.com/room/basicpentesting" },
+            { name: "Kenobi", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/kenobi/Write-Up%20M%C3%A1quina%20Kenobi.md", link: "https://tryhackme.com/room/kenobi" },
+            // Agrega más máquinas aquí
+        ];
 
         function renderMachines() {
             const list = document.getElementById("machine-list");
@@ -92,6 +95,7 @@
             });
         }
 
+        // Inicializa la lista de máquinas
         renderMachines();
     </script>
 </body>
