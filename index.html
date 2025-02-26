@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Listado de Máquinas - TryHackMe</title>
+    <title>Lista de Retos CTF - TryHackMe</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <style>
@@ -23,7 +23,7 @@
 </head>
 <body class="bg-gray-200 text-gray-900 p-6">
     <div class="max-w-3xl mx-auto">
-        <h1 class="text-3xl font-bold text-center mb-4 text-blue-600">Máquinas de TryHackMe</h1>
+        <h1 class="text-3xl font-bold text-center mb-4 text-blue-600">Lista de Retos CTF - TryHackMe</h1>
         <div class="flex items-center bg-white p-3 rounded-md shadow-md mb-4">
             <i class="ph ph-magnifying-glass text-gray-500 text-xl mr-2"></i>
             <input type="text" id="search" placeholder="Buscar máquina..." 
@@ -37,12 +37,15 @@
 
     <script>
         const machines = [
-            { name: "Blue", writeup: "https://example.com/blue-writeup", link: "https://tryhackme.com/room/blue" },
-            { name: "Red", writeup: "https://example.com/red-writeup", link: "https://tryhackme.com/room/red" },
-            { name: "RootMe", writeup: "https://example.com/rootme-writeup", link: "https://tryhackme.com/room/rootme" },
-            { name: "Bounty Hunter", writeup: "https://example.com/bountyhunter-writeup", link: "https://tryhackme.com/room/bountyhunter" },
-            { name: "Overpass", writeup: "https://example.com/overpass-writeup", link: "https://tryhackme.com/room/overpass" }
-        ];
+            "Blue", "Ice", "Blaster", "Library", "Retro", "Techsupp0rt1", "Relevant", "Anthem", "Basic Pentesting", 
+            "Kenobi", "Easypeasyctf", "Sudo Agent", "RootMe", "Brooklyn Nine Nine", "Bounty Hacker", "Poster", "StartUp", 
+            "Gamming Server", "Library", "Lazy Admin", "Startup", "Wgel CTF", "Year of the Rabbit", "lianyu", "Bolt", 
+            "DailyBugle", "pickle rick"
+        ].map(name => ({
+            name,
+            writeup: `https://example.com/${name.toLowerCase().replace(/\s+/g, '-')}-writeup`,
+            link: `https://tryhackme.com/room/${name.toLowerCase().replace(/\s+/g, '')}`
+        }));
 
         function renderMachines() {
             const list = document.getElementById("machine-list");
