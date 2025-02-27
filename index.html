@@ -19,6 +19,13 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+        .folder {
+            display: none;
+            margin-top: 10px;
+        }
+        .folder.active {
+            display: block;
+        }
     </style>
 </head>
 <body class="bg-gray-200 text-gray-900 p-6">
@@ -59,9 +66,9 @@
             { name: "Wgel CTF", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/wgel-ctf/Write-Up%20M%C3%A1quina%20Wgel%20CTF.md", link: "https://tryhackme.com/room/wgelctf" },
             { name: "Year of the Rabbit", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/year-of-the-rabbit/Write-Up%20M%C3%A1quina%20Year%20of%20the%20Rabbit.md", link: "https://tryhackme.com/room/yearoftherabbit" },
             { name: "lianyu", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/lianyu/Write-Up%20M%C3%A1quina%20Lianyu.md", link: "https://tryhackme.com/room/lianyu" },
-            { name: "Bolt", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/bolt/Write-Up%20M%C3%A1quina%20Bolt.md", link: "https://tryhackme.com/room/bolt" },
-            { name: "DailyBugle", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/dailybugle/Write-Up%20M%C3%A1quina%20DailyBugle.md", link: "https://tryhackme.com/room/dailybugle" },
-            { name: "pickle rick", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/picklerick/Write-Up%20M%C3%A1quina%20Pickle%20Rick.md", link: "https://tryhackme.com/room/picklerick" }
+            { name: "Stealth", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/stealth/Write-Up%20M%C3%A1quina%20Stealth.md", link: "https://tryhackme.com/room/stealth" },
+            { name: "DevHunt", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/devhunt/Write-Up%20M%C3%A1quina%20DevHunt.md", link: "https://tryhackme.com/room/devhunt" },
+            { name: "Memoria", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/memoria/Write-Up%20M%C3%A1quina%20Memoria.md", link: "https://tryhackme.com/room/memoria" }
         ];
 
         function renderMachines() {
@@ -69,19 +76,24 @@
             list.innerHTML = "";
             machines.forEach(machine => {
                 const card = document.createElement("div");
-                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
-                card.innerHTML = 
+                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900 cursor-pointer";
+                card.innerHTML = `
                     <i class='ph ph-desktop text-blue-600 text-3xl mb-2'></i>
                     <span class="font-bold mb-2 text-lg">${machine.name}</span>
                     <div class="flex space-x-2">
-                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition">
-                            <i class="ph ph-book-open mr-1"></i> Write-Up
+                        <button class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition view-folder" onclick="toggleFolder('${machine.name}')">
+                            <i class="ph ph-folder mr-1"></i> Ver Carpeta
+                        </button>
+                    </div>
+                    <div class="folder" id="folder-${machine.name}">
+                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition mt-2">
+                            <i class="ph ph-book-open mr-1"></i> Ver Write-Up
                         </a>
-                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition mt-2">
                             <i class="ph ph-arrow-square-out mr-1"></i> TryHackMe
                         </a>
                     </div>
-                ;
+                `;
                 list.appendChild(card);
             });
         }
@@ -92,21 +104,31 @@
             document.getElementById("machine-list").innerHTML = "";
             filteredMachines.forEach(machine => {
                 const card = document.createElement("div");
-                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
-                card.innerHTML = 
+                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900 cursor-pointer";
+                card.innerHTML = `
                     <i class='ph ph-desktop text-blue-600 text-3xl mb-2'></i>
                     <span class="font-bold mb-2 text-lg">${machine.name}</span>
                     <div class="flex space-x-2">
-                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition">
-                            <i class="ph ph-book-open mr-1"></i> Write-Up
+                        <button class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition view-folder" onclick="toggleFolder('${machine.name}')">
+                            <i class="ph ph-folder mr-1"></i> Ver Carpeta
+                        </button>
+                    </div>
+                    <div class="folder" id="folder-${machine.name}">
+                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition mt-2">
+                            <i class="ph ph-book-open mr-1"></i> Ver Write-Up
                         </a>
-                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition">
+                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition mt-2">
                             <i class="ph ph-arrow-square-out mr-1"></i> TryHackMe
                         </a>
                     </div>
-                ;
+                `;
                 document.getElementById("machine-list").appendChild(card);
             });
+        }
+
+        function toggleFolder(machineName) {
+            const folder = document.getElementById(`folder-${machineName}`);
+            folder.classList.toggle('active');
         }
 
         // Inicializa la lista de máquinas
