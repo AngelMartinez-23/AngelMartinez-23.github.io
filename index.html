@@ -24,19 +24,32 @@
 <body class="bg-gray-200 text-gray-900 p-6">
     <div class="max-w-3xl mx-auto">
         <h1 class="text-3xl font-bold text-center mb-4 text-blue-600">Lista de Retos CTF - TryHackMe</h1>
+        
         <div class="flex items-center bg-white p-3 rounded-md shadow-md mb-4">
             <i class="ph ph-magnifying-glass text-gray-500 text-xl mr-2"></i>
             <input type="text" id="search" placeholder="Buscar máquina..." 
                 class="w-full p-2 text-gray-900 rounded-md outline-none" onkeyup="filterMachines()">
         </div>
-        
+
+        <!-- Pestañas -->
+        <div class="mb-4">
+            <button id="class-tab" class="px-4 py-2 bg-blue-500 text-white rounded-md mr-2" onclick="showClassMachines()">Máquinas de Clase</button>
+            <button id="all-tab" class="px-4 py-2 bg-gray-200 text-gray-900 rounded-md" onclick="showAllMachines()">Todas las Máquinas</button>
+        </div>
+
+        <!-- Listado de máquinas -->
         <div id="machine-list" class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Las máquinas se generarán aquí dinámicamente -->
         </div>
     </div>
 
     <script>
-        const machines = [
+        const classMachines = [
+            { name: "pickle rick", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/picklerick/Write-Up%20M%C3%A1quina%20Pickle%20Rick.md", link: "https://tryhackme.com/room/picklerick" }
+        ];
+
+        const allMachines = [
+            ...classMachines,
             { name: "Blue", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/blue/Write-Up%20M%C3%A1quina%20Blue.md", link: "https://tryhackme.com/room/blue" },
             { name: "Ice", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/ice/Write-Up%20M%C3%A1quina%20Ice.md", link: "https://tryhackme.com/room/ice" },
             { name: "Blaster", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/blaster/Write-Up%20M%C3%A1quina%20Blaster.md", link: "https://tryhackme.com/room/blaster" },
@@ -46,13 +59,13 @@
             { name: "Relevant", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/relevant/Write-Up%20M%C3%A1quina%20Relevant.md", link: "https://tryhackme.com/room/relevant" },
             { name: "Anthem", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/anthem/Write-Up%20M%C3%A1quina%20Anthem.md", link: "https://tryhackme.com/room/anthem" },
             { name: "Basic Pentesting", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/basicPentesting/Write-Up%20M%C3%A1quina%20Basic%20Pentesting.md", link: "https://tryhackme.com/room/basicpentestingjt" },
-            { name: "Kenobi", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/kenobi/Write-Up%20M%C3%A1quina%20Kenobi.md", link: "https://tryhackme.com/room/kenobi" },
+            { name: "Kenobi", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/kenobi/Write-Up%20M%C3%A1quina%20Kenobi.md", link: "https://tryhackme.com/room/kenobi" }
         ];
 
-        function renderMachines() {
+        function renderMachines(machineList) {
             const list = document.getElementById("machine-list");
             list.innerHTML = "";
-            machines.forEach(machine => {
+            machineList.forEach(machine => {
                 const card = document.createElement("div");
                 card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
                 card.innerHTML = `
@@ -73,29 +86,24 @@
 
         function filterMachines() {
             const query = document.getElementById("search").value.toLowerCase();
-            const filteredMachines = machines.filter(machine => machine.name.toLowerCase().includes(query));
-            document.getElementById("machine-list").innerHTML = "";
-            filteredMachines.forEach(machine => {
-                const card = document.createElement("div");
-                card.className = "machine-card flex flex-col items-center p-4 bg-white rounded-lg shadow-lg text-gray-900";
-                card.innerHTML = `
-                    <i class='ph ph-desktop text-blue-600 text-3xl mb-2'></i>
-                    <span class="font-bold mb-2 text-lg">${machine.name}</span>
-                    <div class="flex space-x-2">
-                        <a href="${machine.writeup}" target="_blank" class="flex items-center px-3 py-1 bg-blue-500 text-white rounded-lg text-sm hover:bg-blue-700 transition">
-                            <i class="ph ph-book-open mr-1"></i> Write-Up
-                        </a>
-                        <a href="${machine.link}" target="_blank" class="flex items-center px-3 py-1 bg-green-500 text-white rounded-lg text-sm hover:bg-green-700 transition">
-                            <i class="ph ph-arrow-square-out mr-1"></i> TryHackMe
-                        </a>
-                    </div>
-                `;
-                document.getElementById("machine-list").appendChild(card);
-            });
+            const filteredMachines = allMachines.filter(machine => machine.name.toLowerCase().includes(query));
+            renderMachines(filteredMachines);
         }
 
-        // Inicializa la lista de máquinas
-        renderMachines();
+        function showClassMachines() {
+            document.getElementById("class-tab").classList.add("bg-blue-500", "text-white");
+            document.getElementById("all-tab").classList.remove("bg-blue-500", "text-white");
+            renderMachines(classMachines);
+        }
+
+        function showAllMachines() {
+            document.getElementById("all-tab").classList.add("bg-blue-500", "text-white");
+            document.getElementById("class-tab").classList.remove("bg-blue-500", "text-white");
+            renderMachines(allMachines);
+        }
+
+        // Inicializa la lista de máquinas con las de clase
+        showClassMachines();
     </script>
 </body>
 </html>
