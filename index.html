@@ -35,10 +35,10 @@
         <!-- Pestañas de navegación -->
         <div class="mb-4 flex space-x-4">
             <button id="class-tab" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center space-x-2" onclick="showClassMachines()">
-                <i class="ph ph-grip text-white"></i><span>Máquinas de Clase</span>
+                <i class="ph ph-grip text-white"></i><span>Máquinas de clase</span>
             </button>
             <button id="all-tab" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center space-x-2" onclick="showAllMachines()">
-                <i class="ph ph-grid text-white"></i><span>Todas las Máquinas</span>
+                <i class="ph ph-grid text-white"></i><span>Todas las máquinas</span>
             </button>
         </div>
 
@@ -49,6 +49,11 @@
     </div>
 
     <script>
+        // Máquinas de clase
+        const classMachines = [
+            { name: "Pickle rick", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/pickle%20rick/Write-Up%20M%C3%A1quina%20Pickle%20Rick.md", link: "https://tryhackme.com/room/picklerick" }
+        ];
+
         // Todas las máquinas
         const allMachines = [
             ...classMachines,
@@ -62,11 +67,6 @@
             { name: "Anthem", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/anthem/Write-Up%20M%C3%A1quina%20Anthem.md", link: "https://tryhackme.com/room/anthem" },
             { name: "Basic Pentesting", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/basicPentesting/Write-Up%20M%C3%A1quina%20Basic%20Pentesting.md", link: "https://tryhackme.com/room/basicpentestingjt" },
             { name: "Kenobi", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/kenobi/Write-Up%20M%C3%A1quina%20Kenobi.md", link: "https://tryhackme.com/room/kenobi" }
-        ];
-        
-        // Máquinas de clase
-        const classMachines = [
-            { name: "Pickle rick", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/pickle%20rick/Write-Up%20M%C3%A1quina%20Pickle%20Rick.md", link: "https://tryhackme.com/room/picklerick" }
         ];
 
         // Renderizar máquinas
@@ -101,20 +101,17 @@
 
         // Mostrar máquinas de clase
         function showClassMachines() {
-            document.getElementById("class-tab").classList.add("bg-blue-500", "text-white");
-            document.getElementById("all-tab").classList.remove("bg-blue-500", "text-white");
             renderMachines(classMachines);
         }
 
         // Mostrar todas las máquinas
         function showAllMachines() {
-            document.getElementById("all-tab").classList.add("bg-blue-500", "text-white");
-            document.getElementById("class-tab").classList.remove("bg-blue-500", "text-white");
             renderMachines(allMachines);
         }
 
-        // Inicializa la lista de máquinas con las de clase
-        showClassMachines();
+        // Inicializa con todas las máquinas
+        showAllMachines();
     </script>
 </body>
 </html>
+
