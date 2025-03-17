@@ -19,6 +19,16 @@
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
+        /* Estilos de las pestañas */
+        .active-tab {
+            background-color: #1E40AF; /* Azul oscuro */
+            color: white;
+        }
+        .inactive-tab {
+            background-color: #3B82F6; /* Azul claro */
+            color: white;
+            opacity: 0.7;
+        }
     </style>
 </head>
 <body class="bg-gray-200 text-gray-900 p-6">
@@ -34,11 +44,11 @@
 
         <!-- Pestañas de navegación -->
         <div class="mb-4 flex space-x-4">
-            <button id="class-tab" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center space-x-2" onclick="showClassMachines()">
-                <i class="ph ph-grip text-white"></i><span>Máquinas de clase</span>
+            <button id="class-tab" class="px-4 py-2 rounded-md flex items-center space-x-2 active-tab" onclick="showClassMachines()">
+                <i class="ph ph-grip"></i><span>Máquinas de clase</span>
             </button>
-            <button id="all-tab" class="px-4 py-2 bg-blue-500 text-white rounded-md flex items-center space-x-2" onclick="showAllMachines()">
-                <i class="ph ph-grid text-white"></i><span>Todas las máquinas</span>
+            <button id="all-tab" class="px-4 py-2 rounded-md flex items-center space-x-2 inactive-tab" onclick="showAllMachines()">
+                <i class="ph ph-grid"></i><span>Todas las máquinas</span>
             </button>
         </div>
 
@@ -49,12 +59,10 @@
     </div>
 
     <script>
-        // Máquinas de clase
         const classMachines = [
             { name: "Pickle rick", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/pickle%20rick/Write-Up%20M%C3%A1quina%20Pickle%20Rick.md", link: "https://tryhackme.com/room/picklerick" }
         ];
 
-        // Todas las máquinas
         const allMachines = [
             ...classMachines,
             { name: "Blue", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/blue/Write-Up%20M%C3%A1quina%20Blue.md", link: "https://tryhackme.com/room/blue" },
@@ -69,7 +77,6 @@
             { name: "Kenobi", writeup: "https://github.com/AngelMartinez-23/AngelMartinez-23.github.io/blob/main/writeups/kenobi/Write-Up%20M%C3%A1quina%20Kenobi.md", link: "https://tryhackme.com/room/kenobi" }
         ];
 
-        // Renderizar máquinas
         function renderMachines(machineList) {
             const list = document.getElementById("machine-list");
             list.innerHTML = "";
@@ -92,26 +99,33 @@
             });
         }
 
-        // Filtrar máquinas
         function filterMachines() {
             const query = document.getElementById("search").value.toLowerCase();
             const filteredMachines = allMachines.filter(machine => machine.name.toLowerCase().includes(query));
             renderMachines(filteredMachines);
         }
 
-        // Mostrar máquinas de clase
+        function updateTabs(activeTabId) {
+            document.getElementById("class-tab").classList.remove("active-tab");
+            document.getElementById("class-tab").classList.add("inactive-tab");
+            document.getElementById("all-tab").classList.remove("active-tab");
+            document.getElementById("all-tab").classList.add("inactive-tab");
+
+            document.getElementById(activeTabId).classList.add("active-tab");
+            document.getElementById(activeTabId).classList.remove("inactive-tab");
+        }
+
         function showClassMachines() {
             renderMachines(classMachines);
+            updateTabs("class-tab");
         }
 
-        // Mostrar todas las máquinas
         function showAllMachines() {
             renderMachines(allMachines);
+            updateTabs("all-tab");
         }
 
-        // Inicializa con todas las máquinas
         showAllMachines();
     </script>
 </body>
 </html>
-
